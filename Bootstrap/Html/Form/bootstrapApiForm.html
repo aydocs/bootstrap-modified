@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap</title>
+    <link rel="stylesheet" href="../../Css/bootstrap.css">
+</head>
+<body>
+<!-- The API section is fetched from bootstrapEmail.js -->
+
+
+<section class="contact" id="contact">
+    <div class="container">
+        <div class="heading text-center">
+            <h2>Contact <span> Us </span></h2>
+            <p>Please fill out the form below to contact us</p>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <div class="title">
+                    <h3>Contact detail</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor </p>
+                </div>
+                <div class="content">
+                    <div class="info"> 
+                        <i class="fas fa-mobile-alt"></i>
+                        <h4 class="d-inline-block">PHONE :
+                            <br><span>+12457836913 , +12457836913</span></h4>
+                    </div>
+                    <div class="info"> 
+                        <i class="far fa-envelope"></i>
+                        <h4 class="d-inline-block">EMAIL :
+                            <br><span>example@info.com</span></h4>
+                    </div>
+                    <div class="info"> 
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h4 class="d-inline-block">ADDRESS :<br><span>6743 last street , Abcd, Xyz</span></h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <form id="contactForm">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="text" id="name" class="form-control" placeholder="Name" required>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="email" id="email" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="col-sm-12">
+                            <input type="text" id="subject" class="form-control" placeholder="Subject" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" class="form-control" rows="5" placeholder="Message" required></textarea>
+                    </div>
+                    <button class="btn btn-block btn-primary" type="submit">Send Now!</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Status message element -->
+<div id="statusMessage" class="status-message success">
+    Email successfully sent! Hover to dismiss.
+</div>
+
+<script>
+    document.getElementById("contactForm").addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const subject = document.getElementById("subject").value;
+        const message = document.getElementById("message").value;
+
+        const data = {
+            mailAcoounts: "ayberkcihann@gmail.com",
+            messages: message,
+            section: [
+                {
+                    fields: {
+                        Topic: subject,
+                        messages: message,
+                    },
+                    partitionName: "User Message",
+                },
+                {
+                    fields: {
+                        "Full Name": name,
+                        "Email Address": email,
+                        "Phone": "",
+                    },
+                    partitionName: "Contact Information",
+                },
+            ],
+        };
+
+        const url = `https://digipo.web.tr/api/mail/?tema=mail&fromMail=no-reply@postamerkezi.link&fromName=SMMMO%20TANITIM%20SİTESİ&data=${encodeURIComponent(
+            JSON.stringify(data)
+        )}`;
+
+        try {
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "User-Agent": "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13",
+                },
+            });
+
+            if (response.status === 200) {
+                // Change status message style dynamically if you need
+                const statusMessage = document.getElementById("statusMessage");
+                statusMessage.classList.add("dark");
+                statusMessage.textContent = "Email successfully sent!";
+                statusMessage.style.display = "block";
+                document.getElementById("contactForm").reset();
+                setTimeout(() => {
+                    statusMessage.style.display = "none";
+                }, 5000);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    });
+</script>
+    
+    <script src="../Bootstrap/Js/bootstrap.js"></script>
+    <script src="../Bootstrap/Js/bootstrapEmail.js"></script>
+</body>
+</html>
+
+
+
+
+
+<!-- 
+    Developed By Aydocs
+    GitHub Repository: https://github.com/aydocs
+
+    Project: Bootstrap Modified Version
+    Description: This project is a customized and enhanced version of the popular Bootstrap framework. It includes modifications and additional features for better responsiveness, modern design components, and extended utility classes to streamline the development of modern web applications.
+
+    License: MIT License (https://opensource.org/licenses/MIT)
+    Date: 13 March 2025
+    Version: 1.0.0
+
+    If you have any questions, suggestions, or issues, feel free to open an issue or create a pull request at:
+    https://github.com/aydocs/bootstrap-modified
+    -->
